@@ -5,20 +5,15 @@
   import NearByBusiness from "./components/Business/NearbyBusiness";
   import { Routes, Route } from "react-router-dom";
   import Favorites from "./components/Business/Favourites";
-
+  import BusinessDetails from "./components/Business/BusinessDetails"; 
+  
   const App = () => {
 
-    const [favourites , setFavourites] = useState(()=>{
-      const savedFavourites = localStorage.getItem('favourites');
-      return savedFavourites ? JSON.parse(savedFavourites) : [];
-    })
+    const [favourites , setFavourites] = useState([])
     
     const addToFavourites = (business)=>{
-      setFavourites(prevValue=>{
-        const updatedFavourites = [...prevValue,business];
-        localStorage.setItem('favourites',JSON.stringify(updatedFavourites));
-        return updatedFavourites;
-     });
+      setFavourites(prevValue=>[...prevValue, business
+      ])
     };
 
     return (
@@ -27,6 +22,7 @@
           <Routes>
             <Route path="/addbusiness" element={<AddBusinessForm />} />
             <Route path="/business" element={<NearByBusiness addToFavorites={addToFavourites}/>} />
+            <Route path="/business/:place_id" element={<BusinessDetails/>}/>
             <Route path="/favourite" element={<Favorites favouriteBusiness={favourites}/>}/>
           </Routes>  
           <Footer />    

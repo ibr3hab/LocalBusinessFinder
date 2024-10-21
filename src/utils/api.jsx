@@ -1,39 +1,30 @@
 
-import { collection, getDoc, doc, getDocs } from "firebase/firestore";
-import { db } from "./firebaseConfig";
 
-export const fetchNearByBusiness = async (latitude, longitude) => {
-    const businesses = [];
-    const snapshot = await getDocs(collection(db, 'businesses'));
-
-    snapshot.forEach((doc) => {
-        const business = doc.data();
-        const distance = calculateDistance(latitude, longitude, business.latitude, business.longitude);
-        businesses.push({ id: doc.id, ...business, distance });
-    });
+export const fetchNearByBusiness = async (latitude, longitude , GoogleAPI) => {
     
-    return businesses.sort((a, b) => a.distance - b.distance);
-};
 
-export const fetchBusinessDetails = async (id) => {
-    if (!id) {
-        throw new Error("Invalid Business ID is passed");
-    }
+    const GoogleAPI = '54891a3f4085d2a2b173a86caa8d74e32a21c382';
+    const radius = 5000;
+    const location = `${latitude},${longitude}`;
+
+   const response = await fetch(`http://localhost:3001/nearbysearch?location=${location}&radius=${radius}&GoogleAPI=${GoogleAPI}`);
+
+    const data = await response.json();
+
+    if (data.status === 'OK') {
+        return data.results.map((business) => ({
+          place_id: business.place_id,
+          name: business.name,
+          rating: business.rating,
+          vicinity: business.vicinity,
+          distance: calculateDistance(latitude, longitude, business.geometry.location.lat, business.geometry.location.lng),
+        }));
+      } else {
+        console.error('Error fetching businesses:', data.status);
+        return [];
+      }
+    };
   
-    try {
-        const documentRef = doc(db, 'businesses', id); 
-        const documentSnapshot = await getDoc(documentRef);
-    
-        if (documentSnapshot.exists()) {
-            return documentSnapshot.data(); 
-        } else {
-            throw new Error('Business not found');
-        }
-    } catch (error) {
-        console.error('Error fetching business details:', error); 
-        throw error; 
-    }
-};
 
 const calculateDistance = (lat1, lon1, lat2, lon2) => {
     const R = 6371; 

@@ -11,17 +11,18 @@ const NearByBusiness = ({addToFavorites}) => {
     const [business, setBusiness] = useState([]);
     const [loading, setLoading] = useState(true);
     const [filteredBusiness , setFilteredBusiness] = useState([])
+    const GoogleAPI = '54891a3f4085d2a2b173a86caa8d74e32a21c382';
 
     useEffect(() => {
         if ("geolocation" in navigator) {
-            navigator.geolocation.getCurrentPosition(
+            navigator.geolocation.getCurrentPosition(           
                 async (position) => {
                     const latitude = position.coords.latitude;
                     const longitude = position.coords.longitude;
                     
 
                     try {
-                        const fetchedBusiness = await fetchNearByBusiness(latitude, longitude);
+                        const fetchedBusiness = await fetchNearByBusiness(latitude, longitude ,GoogleAPI);
                         console.log("Fetched businesses:", fetchedBusiness);
                         setBusiness(fetchedBusiness);
                         setFilteredBusiness(fetchedBusiness);

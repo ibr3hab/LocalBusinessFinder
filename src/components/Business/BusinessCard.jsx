@@ -6,8 +6,12 @@ const BusinessCard = ({ business }) => {
     return (
         <Card>
             <CardContent>
-                <Typography variant="h5">{business.name}</Typography>       
-                <Link to={`/business/${business.id}`}>View Details</Link>
+                <Typography variant="h5">{business.name}</Typography>    
+                <Typography variant="h5">{business.category}</Typography>    
+                <Typography variant="h5">{business.rating || 'N/A'}</Typography>    
+                <Typography variant="h5">{business.distance.toFixed(2)}</Typography>    
+                <Typography variant="h5">{business.vicinity}</Typography>    
+                <Link to={`/business/${business.place_id}`}>View Details</Link>
             </CardContent>
         </Card>
     );

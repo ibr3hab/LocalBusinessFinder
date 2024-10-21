@@ -1,6 +1,6 @@
 const Favorites = ({favouriteBusiness})=>{
     return(
-        <div>
+        <div style={{marginTop : '150px'}}>
         <h2>Favourite Business</h2>
         {favouriteBusiness.length > 0 ?
         (favouriteBusiness.map(bus=>(
