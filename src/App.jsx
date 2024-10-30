@@ -6,6 +6,7 @@
   import { Routes, Route } from "react-router-dom";
   import Favorites from "./components/Business/Favourites";
   import BusinessDetails from "./components/Business/BusinessDetails"; 
+  import BusinessList from "./components/AddBusinessForm/BusinessList";
   
   const App = () => {
 
@@ -20,14 +21,15 @@
       <div>
          <Header /> 
           <Routes>
+            <Route path="/businesslist" element={<BusinessList/>}/>
             <Route path="/addbusiness" element={<AddBusinessForm />} />
-            <Route path="/business" element={<NearByBusiness addToFavorites={addToFavourites}/>} />
+            <Route path="/" element={<NearByBusiness addToFavorites={addToFavourites}/>} />
             <Route path="/business/:place_id" element={<BusinessDetails/>}/>
             <Route path="/favourite" element={<Favorites favouriteBusiness={favourites}/>}/>
           </Routes>  
           <Footer />    
       </div>
-    );
+    );  
   };
 
   export default App;

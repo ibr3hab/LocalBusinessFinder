@@ -1,67 +1,73 @@
-    import React, { useEffect, useState } from "react";
-    import { useParams } from "react-router-dom";
-    
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
-    const BusinessDetails = () => {
-        const { place_id } = useParams();
+const BusinessDetails = () => {
+    const { place_id } = useParams();
+    const [business, setBusiness] = useState(null);
+    const [loading, setLoading] = useState(true);
+    console.log('Place id : ',place_id);
 
-        const [business, setBusiness] = useState(null);
-        const [loading, setLoading] = useState(true);
-        const GoogleAPI = '54891a3f4085d2a2b173a86caa8d74e32a21c382';
-
-
-        useEffect(() => {
-           const fetchBusinessDetails = async ()=>{
-          
-            const response = await fetch(
-                `https://maps.googleapis.com/maps/api/place/details/json?place_id=${place_id}&key=${GoogleAPI}`
-            );
-            
-            
-           const data = await response.json();
-
-           if(data.status === 'OK'){
-            setBusiness(data.result)
-           }else{
-            console.error("Error fetching business",data.status)
-           }
-           setLoading(false)
-           }
-           fetchBusinessDetails();
-            
-         },[place_id])
-
-        if (loading) {
-            return <p>...Loading</p>;
+    useEffect(() => {
+        const fetchBusinessDetails = async () => {
+            const options = {
+                method: 'GET',
+                url: 'https://google-map-places.p.rapidapi.com/maps/api/place/details/json',
+                params: {
+                  place_id: `${place_id}`,
+                  region: 'en',
+                  fields: 'all',
+                  language: 'en',
+                  reviews_no_translations: 'true'
+                },
+                headers: {
+                  'x-rapidapi-key': 'a702c7c0c9mshbacdbdfe6384f93p11c06ajsne4b5f8cdd2fb',
+                  'x-rapidapi-host': 'google-map-places.p.rapidapi.com'
+                }
+              };
+              
+              try {
+                  const response = await axios.request(options);
+                  console.log(response.data);
+                  setBusiness(response.data.result);
+              } catch (error) {
+                  console.error(error);
+              }
         }
+        setLoading(false);
+        fetchBusinessDetails();
+    }, [place_id]);
 
-        return (
-            business ? (
+    if (loading) {
+        return <p>...Loading</p>;
+    }
+
+    return (
+        business ? (
+            <div style={{marginTop : '110px'}}>
+                <h2>{business.name}</h2>
+                <p>{business.formatted_address}</p>
+                <p>Rating: {business.rating}</p>
+                <p>Contact: {business.formatted_phone_number}</p>
+                <p>Website: <a href={business.website} target="_blank" rel="noopener noreferrer">{business.website}</a></p>
                 <div>
-                      <h2>{business.name}</h2>
-      <p>{business.formatted_address}</p>
-      <p>Rating: {business.rating}</p>
-      <p>Contact: {business.formatted_phone_number}</p>
-      <p>Website: <a href={business.website} target="_blank" rel="noopener noreferrer">{business.website}</a></p>
-
-                    <div>
-                        <h3>Reviews</h3>
-                        {business.reviews && business.reviews.length > 0 ? (
-                            business.reviews.map((review, index) => (
-                                <div key={index}>
-                                    <h3>{review.user} : {review.comment}</h3>
-                                    <p>Rating : {review.rating}</p>
-                                </div>
-                            ))
-                        ) : (
-                            <p>No reviews yet</p>
-                        )}
-                    </div>
+                    <h3>Reviews</h3>    
+                    {business.reviews && business.reviews.length > 0 ? (
+                        business.reviews.map((review, index) => (
+                            <div key={index}>
+                                <h4>{review.author_name}: {review.text}</h4>
+                                <p>Rating: {review.rating}</p>
+                            </div>
+                        ))
+                    ) : (
+                        <p>No reviews yet</p>
+                    )}
                 </div>
-            ) : (
-                <p>Business not found</p>
-            )
-        );
-    };
+            </div>
+        ) : (
+            <p>Business not found</p>
+        )
+    );
+};
 
-    export default BusinessDetails;
+export default BusinessDetails;

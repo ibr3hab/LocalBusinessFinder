@@ -11,8 +11,8 @@ const NearByBusiness = ({addToFavorites}) => {
     const [business, setBusiness] = useState([]);
     const [loading, setLoading] = useState(true);
     const [filteredBusiness , setFilteredBusiness] = useState([])
-    const GoogleAPI = '54891a3f4085d2a2b173a86caa8d74e32a21c382';
-
+    const GoogleAPI = 'a702c7c0c9mshbacdbdfe6384f93p11c06ajsne4b5f8cdd2fb';
+    
     useEffect(() => {
         if ("geolocation" in navigator) {
             navigator.geolocation.getCurrentPosition(           
@@ -22,10 +22,10 @@ const NearByBusiness = ({addToFavorites}) => {
                     
 
                     try {
-                        const fetchedBusiness = await fetchNearByBusiness(latitude, longitude ,GoogleAPI);
-                        console.log("Fetched businesses:", fetchedBusiness);
+                        const fetchedBusiness = await fetchNearByBusiness(latitude, longitude ,GoogleAPI)
                         setBusiness(fetchedBusiness);
                         setFilteredBusiness(fetchedBusiness);
+                        console.log('FIltered business',fetchedBusiness)
                     } catch (error) {
                         console.error("Error fetching nearby businesses:", error);
                     } finally {
@@ -48,29 +48,46 @@ const NearByBusiness = ({addToFavorites}) => {
     }
 
     const handleSearch = (searchTerm) => {
-        const filtered = business.filter(bus =>
+        const filtered = business.filter(bus =>            
             typeof bus.name === 'string' && bus.name.toLowerCase().includes(searchTerm.toLowerCase())
-        );
+    );
         setFilteredBusiness(filtered);
-        console.log("Business",filtered);
     };
-    
     const handleFilter = (category) => {
-        const filtered = business.filter(bus =>
-            typeof bus.category === 'string' && bus.category.toLowerCase().includes(category.toLowerCase())
-        );
+        const filtered = business.filter(bus => {
+          if (!Array.isArray(bus.types)) {
+            console.warn('Business types is not an array:', bus);
+            return false;
+          }
+          
+          const normalizedCategory = category.toLowerCase();
+          return bus.types.some(type => type.toLowerCase() === normalizedCategory);
+        });
+      
+        console.log('Filtering by category:', category);
+        console.log('Filtered businesses:', filtered);
+        
         setFilteredBusiness(filtered);
-    };
+      };
     
 
-     console.log('Business : ',business)
+    const clearSearch = ()=>{
+        setFilteredBusiness(business);
+    }
+
+    const clearFilter  =()=>{
+        setFilteredBusiness(business);
+    }
+
+  
+
      return (
         <div style={{ marginTop: '10%' }}>
             <h2>Nearby Businesses</h2>
-            <SearchandFilterBar onFilter={handleFilter} onSearch={handleSearch} />
-            {filteredBusiness.length > 0 ? (
-                filteredBusiness.map((bus) => (
-                    <div key={bus.id}>
+            <SearchandFilterBar onFilter={handleFilter} onSearch={handleSearch} clearFilter={clearFilter} clearSearch={clearSearch}/>
+            {filteredBusiness && filteredBusiness.length > 0 ? (
+                filteredBusiness.map((bus , index) => (
+                    <div key={index}>
                         <BusinessCard business={bus} />
                         <Map business={bus} />
                         <Button onClick={() => addToFavorites(bus)}>Add To Favourites</Button>
@@ -84,3 +101,4 @@ const NearByBusiness = ({addToFavorites}) => {
 };
 
 export default NearByBusiness;
+

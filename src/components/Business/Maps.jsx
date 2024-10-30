@@ -18,7 +18,7 @@ const Map = ({business})=>{
         lat :parseFloat(business.latitude),
         lng :parseFloat(business.longitude)
     } : defaultLocation
-    console.log("Business Coordinates:", center.lat, center.lng);
+  
 
     const zoom =12;
 
