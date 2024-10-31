@@ -4,6 +4,7 @@ import BusinessCard from "./BusinessCard";
 import SearchandFilterBar from "./SearchandFilterBar";
 import Map from "./Maps";
 import { Button } from "@mui/material";
+import "./nearbyBusiness.css";
 
 
 
@@ -11,7 +12,7 @@ const NearByBusiness = ({addToFavorites}) => {
     const [business, setBusiness] = useState([]);
     const [loading, setLoading] = useState(true);
     const [filteredBusiness , setFilteredBusiness] = useState([])
-    const GoogleAPI = 'a702c7c0c9mshbacdbdfe6384f93p11c06ajsne4b5f8cdd2fb';
+    const GoogleAPI = import.meta.env.Google_API;
     
     useEffect(() => {
         if ("geolocation" in navigator) {
@@ -81,24 +82,40 @@ const NearByBusiness = ({addToFavorites}) => {
 
   
 
-     return (
-        <div style={{ marginTop: '10%' }}>
+    return (
+        <div className="main">
             <h2>Nearby Businesses</h2>
-            <SearchandFilterBar onFilter={handleFilter} onSearch={handleSearch} clearFilter={clearFilter} clearSearch={clearSearch}/>
-            {filteredBusiness && filteredBusiness.length > 0 ? (
-                filteredBusiness.map((bus , index) => (
-                    <div key={index}>
-                        <BusinessCard business={bus} />
-                        <Map business={bus} />
-                        <Button onClick={() => addToFavorites(bus)}>Add To Favourites</Button>
-                    </div>
-                ))
-            ) : (
-                <p>No nearby businesses found.</p>
-            )}
+            
+            <div className="search-filter-bar">
+                <SearchandFilterBar 
+                    onFilter={handleFilter} 
+                    onSearch={handleSearch} 
+                    clearFilter={clearFilter} 
+                    clearSearch={clearSearch} 
+                    className="search"
+                />
+            </div>
+            
+            
+            <div className="business-cards-container">
+                {filteredBusiness && filteredBusiness.length > 0 ? (
+                    filteredBusiness.map((bus, index) => (
+                        <div key={index} className="card">
+                            <BusinessCard business={bus} />
+                            <div className="map-container">
+                            <Map business={bus} />
+                            </div>
+                            <Button onClick={() => addToFavorites(bus)}>Add To Favorites</Button>
+                        </div>
+                    ))
+                ) : (
+                    <p>No nearby businesses found.</p>
+                )}
+            </div>
         </div>
     );
-};
+}
+    
 
 export default NearByBusiness;
 

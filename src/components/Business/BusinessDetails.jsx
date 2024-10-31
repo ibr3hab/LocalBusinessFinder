@@ -21,7 +21,7 @@ const BusinessDetails = () => {
                   reviews_no_translations: 'true'
                 },
                 headers: {
-                  'x-rapidapi-key': 'a702c7c0c9mshbacdbdfe6384f93p11c06ajsne4b5f8cdd2fb',
+                  'x-rapidapi-key': import.meta.env.Google_API,
                   'x-rapidapi-host': 'google-map-places.p.rapidapi.com'
                 }
               };

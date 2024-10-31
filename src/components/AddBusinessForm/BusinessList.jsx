@@ -9,27 +9,28 @@ const BusinessList = ()=>{
         const fetchbus = async ()=>{
             const querySnapshot = await getDocs(collection(db , 'businesses'));
             setBusinessList(querySnapshot.docs.map(doc=>doc.data()));  
+            console.log('The added business List from',querySnapshot.docs.map(doc=>doc.data()))
             setLoading(false)
         }
         fetchbus();
     },[])
 
     if(loading){
-        <p>...Loading</p>
+       return <p>...Loading</p>
     }
 
     return(
         <div style={{marginTop : "200px"}}>
             <h1>Business List</h1>
             <ul>
-            {businessList.map(bus=>{
+            {businessList.map(bus=>(
                 <li key={bus.id}>
                     <h3>{bus.category}</h3>
                     <p>{bus.latitude}</p>
                     <p>{bus.longitude}</p>
                     <p>{bus.name}</p>
                 </li>
-            }
+            )
             )}
          </ul>
         </div>

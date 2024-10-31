@@ -12,7 +12,7 @@ export const fetchNearByBusiness = async (latitude, longitude, GoogleAPI) => {
           radius: radius,
         },
         headers: {
-          'x-rapidapi-key': GoogleAPI, // Your API Key
+          'x-rapidapi-key': GoogleAPI, 
           'x-rapidapi-host': 'google-map-places.p.rapidapi.com'
         },
       }
@@ -24,7 +24,7 @@ export const fetchNearByBusiness = async (latitude, longitude, GoogleAPI) => {
       return data.results.map((business) => ({
         place_id: business.place_id,
         name: business.name,
-        types: business.types[0],
+        types: business.types,
         rating: business.rating,
         latitude: business.geometry.location.lat, 
         longitude: business.geometry.location.lng,
