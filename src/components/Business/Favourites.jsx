@@ -15,3 +15,4 @@ const Favorites = ({favouriteBusiness})=>{
 }
 
 export default Favorites;
+

@@ -12,7 +12,8 @@ const NearByBusiness = ({addToFavorites}) => {
     const [business, setBusiness] = useState([]);
     const [loading, setLoading] = useState(true);
     const [filteredBusiness , setFilteredBusiness] = useState([])
-    const GoogleAPI = import.meta.env.Google_API;
+    const Google_API = import.meta.env.Google_API
+ 
     
     useEffect(() => {
         if ("geolocation" in navigator) {
@@ -23,7 +24,7 @@ const NearByBusiness = ({addToFavorites}) => {
                     
 
                     try {
-                        const fetchedBusiness = await fetchNearByBusiness(latitude, longitude ,GoogleAPI)
+                        const fetchedBusiness = await fetchNearByBusiness(latitude, longitude ,Google_API)
                         setBusiness(fetchedBusiness);
                         setFilteredBusiness(fetchedBusiness);
                         console.log('FIltered business',fetchedBusiness)

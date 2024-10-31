@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const fetchNearByBusiness = async (latitude, longitude, GoogleAPI) => {
+export const fetchNearByBusiness = async (latitude, longitude, Google_API) => {
   const radius = 5000;
 
   try {
@@ -12,7 +12,7 @@ export const fetchNearByBusiness = async (latitude, longitude, GoogleAPI) => {
           radius: radius,
         },
         headers: {
-          'x-rapidapi-key': GoogleAPI, 
+          'x-rapidapi-key': Google_API, 
           'x-rapidapi-host': 'google-map-places.p.rapidapi.com'
         },
       }

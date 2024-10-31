@@ -1,19 +1,29 @@
 import React from "react";
-import "./header.css";
-import NavBar from "./NavBar";
+import { AppBar, Toolbar } from "@mui/material";
+import NavBar from "./NavBar"; // Adjust path to your NavBar component
+import "./Header.css"; // Add this for custom styles if needed
 
+const Header = () => {
+  return (
+    <div>
+      <AppBar position="fixed" style={{ backgroundColor:  'rgb(83, 83, 148)'}}> {/* Darker header color */}
+        <Toolbar style={{ display: "flex", justifyContent: "space-between", padding: "0 20px" }}>
+          {/* Left side: logo and heading */}
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <img className="img1" src="/public/buslogo.ico" alt="logo" style={{ height: "40px", marginRight: "10px" }} />
+            <h1 style={{ fontSize: "24px", margin: 0 }}>Business Finder</h1>
+          </div>
 
+         <div className="nav"> {/* Right side: NavBar */}
+          <NavBar />
+          </div>
+        </Toolbar>
+      </AppBar>
 
-const Header = ()=>{
-    return(
-        <header className="header1">
-            <div className="logo-heading">
-            <img className="img1" src="/public/buslogo.ico" alt="logo"/>
-            <h1>Business Finder</h1>
-            </div>
-            <NavBar/>
-        </header>
-    )
-}
+      {/* Spacer to offset fixed AppBar */}
+      <Toolbar />
+    </div>
+  );
+};
 
 export default Header;

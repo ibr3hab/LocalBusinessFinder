@@ -1,42 +1,16 @@
 .header1 {
-    width: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-color: rgb(83, 83, 148);
-    box-shadow: 0px -1px 5px rgba(0, 0, 0, 0.1);
-    display: flex;            
-    align-items: center;     
-    justify-content: space-between; /
-}
-
-.logo-heading {
-    display: flex;            
-    align-items: center; 
-    margin-left: 20px;     
-}
-
-.img1 {
-    width: 50px;              
-    height: auto;            
-    margin-right: 10px;      
-}
-
-header img, header h1 {
-    display: inline-block;
-    vertical-align: middle;
-
-}
-
-nav {
-    display: flex;           
-    gap: 20px;             
-}
-
-nav a {
-    color: white;             
-    text-decoration: none;
-    font-weight: bold;
-    padding: 5px 10px;
-}
-
+    height: auto;
+  }
+  
+  
+  .img1 {
+    height: 40px;
+  }
+  
+  h1 {
+    font-size: 24px;
+    color: white;
+    margin: 0;
+  }
+  
+  

@@ -27,7 +27,7 @@ const SearchandFilterBar = ({onFilter , onSearch , clearSearch , clearFilter})=>
                     placeholder="Search"
                 />
                 <Button type="submit">Search</Button>
-                <Button onClick={clearSearch}>Clear Search</Button>
+                <Button onClick={clearSearch}>Clear Se  arch</Button>
             </form>
             
             <FormControl>
