@@ -12,7 +12,7 @@ const NearByBusiness = ({addToFavorites}) => {
     const [business, setBusiness] = useState([]);
     const [loading, setLoading] = useState(true);
     const [filteredBusiness , setFilteredBusiness] = useState([])
-    const Google_API = import.meta.env.Google_API
+    const Google_API = import.meta.env.VITE_API_KEY;
  
     
     useEffect(() => {
