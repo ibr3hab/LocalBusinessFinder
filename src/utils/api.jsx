@@ -12,7 +12,7 @@ export const fetchNearByBusiness = async (latitude, longitude, Google_API) => {
           radius: radius,
         },
         headers: {
-          'x-rapidapi-key': Google_API, 
+          'x-rapidapi-key': import.meta.env.VITE_API_KEY, 
           'x-rapidapi-host': 'google-map-places.p.rapidapi.com'
         },
       }
