@@ -10,8 +10,8 @@ const Header = () => {
         <Toolbar style={{ display: "flex", justifyContent: "space-between", padding: "0 20px" }}>
           {/* Left side: logo and heading */}
           <div style={{ display: "flex", alignItems: "center" }}>
-            <img className="img1" src="/public/buslogo.ico" alt="logo" style={{ height: "40px", marginRight: "10px" }} />
-            <h1 style={{ fontSize: "24px", margin: 0 }}>Business Finder</h1>
+            <img  src="/buslogo.jpg" alt="logo" style={{ height: "40px", marginRight: "10px" }} />
+            <h1 style={{ fontSize: "24px", margin: 0 }}> Business Finder</h1>
           </div>
 
          <div className="nav"> {/* Right side: NavBar */}
